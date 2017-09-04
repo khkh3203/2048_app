@@ -81,6 +81,7 @@ public class Square : MonoBehaviour
 
     public void Move(GameObject target)
     {
+        
         move = true;
         combineTarget = target;
 
@@ -88,6 +89,8 @@ public class Square : MonoBehaviour
 
         if (target.transform.position == transform.position)
         {
+            Debug.Log("합체!");
+            ScoreManager.setScore();
             move = false;
             target.transform.FindChild("Text").GetComponent<TextMesh>().text = target.GetComponent<Square>().value.ToString();
             target.GetComponent<SpriteRenderer>().color = curColorArray[getPow(target.GetComponent<Square>().value) - 1];

@@ -16,6 +16,10 @@ public class SwipeManager : MonoBehaviour
     void Update()
     {
         DetectSwipe();
+
+            //Debug.Log("x값 :" + currentSwipe.x);
+            //Debug.Log("y값 :" + currentSwipe.y);
+        
     }
     
     public void DetectSwipe()
@@ -39,14 +43,14 @@ public class SwipeManager : MonoBehaviour
             currentSwipe.Normalize();
 
             // Swipe up
-            if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) { swipeDirection = Swipe.Up; }
+            if (currentSwipe.y > 0.5f && currentSwipe.x > 0.5f) { swipeDirection = Swipe.Up; }
             // Swipe down
-            else if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) { swipeDirection = Swipe.Down; }
+            else if (currentSwipe.y < -0.5f && currentSwipe.x < -0.5f) { swipeDirection = Swipe.Down; }
             // Swipe left
-            else if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) { swipeDirection = Swipe.Left; }
+            else if (currentSwipe.y > 0.5f && currentSwipe.x < -0.5f) { swipeDirection = Swipe.Left; }
             // Swipe right
-            else if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) { swipeDirection = Swipe.Right; }
-        }
+            else if (currentSwipe.y < -0.5f && currentSwipe.x > 0.5f) { swipeDirection = Swipe.Right; }
+        }   
         else { swipeDirection = Swipe.None; }
     }
 }
