@@ -24,6 +24,8 @@ public class SwipeManager : MonoBehaviour
     
     public void DetectSwipe()
     {
+        if (ItemManager.isChecked)            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);

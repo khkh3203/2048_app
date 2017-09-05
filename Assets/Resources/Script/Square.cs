@@ -10,7 +10,7 @@ public class Square : MonoBehaviour
     public int value;
     Vector2 curTarget;
     GameObject combineTarget;
-    Color[] curColorArray;
+    public static Sprite[] curImgArray;
     
     private void Start()
     {
@@ -51,7 +51,7 @@ public class Square : MonoBehaviour
         }
     }
 
-    private int getPow(int value)
+    public static int getPow(int value)
     {
         int count = 0;
 
@@ -92,19 +92,21 @@ public class Square : MonoBehaviour
             Debug.Log("합체!");
             ScoreManager.setScore();
             move = false;
-            target.transform.FindChild("Text").GetComponent<TextMesh>().text = target.GetComponent<Square>().value.ToString();
-            target.GetComponent<SpriteRenderer>().color = curColorArray[getPow(target.GetComponent<Square>().value) - 1];
+            //target.transform.FindChild("Text").GetComponent<TextMesh>().text = target.GetComponent<Square>().value.ToString();
+            if(getPow(target.GetComponent<Square>().value) - 1 < curImgArray.Length)            
+                target.GetComponent<SpriteRenderer>().sprite = curImgArray[getPow(target.GetComponent<Square>().value) - 1];            
+            
             GameObject.Find("SquareManager").GetComponent<SquareManager>().CreateSquare();
             Destroy(gameObject);
         }
     }
 
-    public void SetColor(Color[] colorArray)
+    public void SetSprite(Sprite[] imgArray)
     {
-        curColorArray = colorArray;
+        curImgArray = imgArray;
         string numberText = transform.FindChild("Text").GetComponent<TextMesh>().text;
         int number = System.Convert.ToInt32(numberText);
 
-        GetComponent<SpriteRenderer>().color = colorArray[(number / 2) - 1];
+        GetComponent<SpriteRenderer>().sprite = imgArray[(number / 2) - 1];
     }
 }

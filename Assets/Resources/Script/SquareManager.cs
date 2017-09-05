@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SquareManager : MonoBehaviour
 {
-    Color[] colorArray;
+    Sprite[] imgArray;
     public GameObject defaultSquare;
     bool created = false;
     bool dragging;
@@ -17,10 +17,11 @@ public class SquareManager : MonoBehaviour
 
     private void Awake()
     {
-        colorArray = new Color[10];
-        for (int i = 0; i < 10; i++)
+        imgArray = new Sprite[10];
+        for (int i = 0; i < imgArray.Length; i++)
         {
-            colorArray[i] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f);
+            imgArray[i] = GameObject.Find("SpriteManager").GetComponent<SpriteManager>().GetSprite("grass"+i%3);
+            Debug.Log(imgArray[i]);
         }
 
         dragging = false;
@@ -28,7 +29,7 @@ public class SquareManager : MonoBehaviour
         zeroIndexPosition = defaultSquare.transform.position;
         squareArray = new GameObject[width, height];
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Screen.SetResolution(720, 1280, true);
+        Screen.SetResolution(800, 1280, true);
 
     }
 
@@ -38,7 +39,8 @@ public class SquareManager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {        
+
         CheckArrayFull();
         bool check = false;
         
@@ -299,10 +301,10 @@ public class SquareManager : MonoBehaviour
         }
 
         squareArray[y, x] = Instantiate(defaultSquare, new Vector3(zeroIndexPosition.x + (0.6f * x-y+((x*0.4f)))*1.25f - 10, zeroIndexPosition.y - (0.6f * y+x+((y*0.4f)))*1.1f, zeroIndexPosition.z), Quaternion.identity);
-//        squareArray[y, x] = Instantiate(defaultSquare, new Vector3(zeroIndexPosition.x + (1.2f * x), zeroIndexPosition.y - (1.2f * y), zeroIndexPosition.z), Quaternion.identity);
-        squareArray[y, x].transform.FindChild("Text").GetComponent<TextMesh>().text = (Random.Range(0, width) > 2) ? 4.ToString() : 2.ToString();
-        squareArray[y, x].GetComponent<Square>().SetColor(colorArray);
-        squareArray[y, x].transform.Rotate(new Vector3(45, 0, -45));
+        //squareArray[y, x].transform.FindChild("Text").GetComponent<TextMesh>().text = (Random.Range(0, width) > 2) ? 4.ToString() : 2.ToString();
+        squareArray[y, x].GetComponent<Square>().SetSprite(imgArray);
+        squareArray[y, x].transform.Rotate(new Vector3(0,0,0));
 
     }
+
 }
